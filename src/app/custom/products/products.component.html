@@ -1,0 +1,39 @@
+<p-table [value]="datasproducts" [tableStyle]="{'min-width': '60rem'}">
+    <!--  User Products  -->
+    <ng-template pTemplate="caption">
+        <div class="card">
+            <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+        </div>
+    </ng-template>
+    <!-- Header -->
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Link</th>
+            <th>Amount</th>
+        </tr>
+    </ng-template>
+    <!--  Body  -->
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.description}}</td>
+            <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+                     [alt]="product.name" width="100" class="shadow-4"/></td>
+            <td>{{product.price | currency:'USD'}}</td>
+            <td>{{product.link}}</td>
+            <td>{{product.amount}}</td>
+        </tr>
+    </ng-template>
+    <!--    Summary -->
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+            In total there are {{datasproducts ? datasproducts.length : 0 }} products.
+        </div>
+    </ng-template>
+</p-table>
