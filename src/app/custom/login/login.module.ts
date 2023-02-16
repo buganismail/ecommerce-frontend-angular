@@ -6,6 +6,7 @@ import {RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {DividerModule} from "primeng/divider";
 import {InputTextModule} from "primeng/inputtext";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -18,6 +19,7 @@ import {InputTextModule} from "primeng/inputtext";
     ButtonModule,
     DividerModule,
     InputTextModule,
+    FormsModule,
   ]
 })
 export class LoginModule { }
