@@ -1,39 +1,101 @@
-<p-table [value]="datasproducts" [tableStyle]="{'min-width': '60rem'}">
-    <!--  User Products  -->
-    <ng-template pTemplate="caption">
-        <div class="card">
-            <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+<p-toast></p-toast>
+
+<div class="card">
+    <!--    New, Delete Bar-->
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple type="button" label="Cart" icon="pi pi-shopping-cart" class="mr-5 p-button-raised"
+                    [routerLink]="['/cart']"></button>
+            <button pButton pRipple type="button" label="Sign Out" icon="pi pi-sign-out" class="mr-3 p-button-danger"
+                    [routerLink]="['']"></button>
+        </ng-template>
+        <ng-template pTemplate="right">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+                          class="mr-2 inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+    <p-table #dt [value]="products" [rows]="10" [paginator]="true"
+             [globalFilterFields]="['name','country.name','representative.name','status']"
+             [tableStyle]="{'min-width': '75rem'}"
+             [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+             [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">User Panel - Products</h5>
+            </div>
+        </ng-template>
+        <!-- Header -->
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">ID
+                    <p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name" style="min-width:10rem">Name
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th>Image</th>
+                <th pSortableColumn="price">Price
+                    <p-sortIcon field="price"></p-sortIcon>
+                </th>
+                <th pSortableColumn="inventoryStatus" style="min-width:10rem">Status
+                    <p-sortIcon field="inventoryStatus"></p-sortIcon>
+                </th>
+                <th></th>
+
+            </tr>
+        </ng-template>
+        <!--  Body  -->
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.id}}</td>
+                <td>{{product.name}}</td>
+                <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+                         [alt]="product.name" width="100" class="shadow-4"/></td>
+                <td>{{product.price | currency:'USD'}}</td>
+                <td><span
+                        [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toLowerCase() : '')">{{product.inventoryStatus}}</span>
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-shopping-cart" class="p-button-rounded p-button-success mr-2"
+                            (click)="showDetail(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <!--    Summary -->
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{products ? products.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+<!--    Product Details     -->
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image"
+             class="product-image" *ngIf="product.image">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" disabled pInputText id="name" [(ngModel)]="product.name" required autofocus/>
+            <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" disabled pInputTextarea [(ngModel)]="product.description" required rows="3"
+                      cols="20"></textarea>
         </div>
     </ng-template>
-    <!-- Header -->
-    <ng-template pTemplate="header">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Image</th>
-            <th>Price</th>
-            <th>Link</th>
-            <th>Amount</th>
-        </tr>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="+" class="p-button-text" (click)="inc(product)"></button>
+        {{this.stok}}
+        <button pButton pRipple label="-" class="p-button-text" (click)="dec(product)"></button>
+        <button pButton pRipple label="Buy" icon="pi pi-wallet" class="p-button-text"
+                (click)="shopAdd(product)"></button>
     </ng-template>
-    <!--  Body  -->
-    <ng-template pTemplate="body" let-product>
-        <tr>
-            <td>{{product.id}}</td>
-            <td>{{product.name}}</td>
-            <td>{{product.description}}</td>
-            <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-                     [alt]="product.name" width="100" class="shadow-4"/></td>
-            <td>{{product.price | currency:'USD'}}</td>
-            <td>{{product.link}}</td>
-            <td>{{product.amount}}</td>
-        </tr>
-    </ng-template>
-    <!--    Summary -->
-    <ng-template pTemplate="summary">
-        <div class="flex align-items-center justify-content-between">
-            In total there are {{datasproducts ? datasproducts.length : 0 }} products.
-        </div>
-    </ng-template>
-</p-table>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

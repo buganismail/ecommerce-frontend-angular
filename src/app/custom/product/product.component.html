@@ -1,1 +1,21 @@
-<h1>Product</h1>
+<div class="product-info" *ngFor="let product of products">
+    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+         [alt]="product.name" width="500" class="shadow-4"/>
+    <div class="card-body">
+        <h5>{{product.name}}</h5>
+        <span class="card-text">Açıklama : {{product?.description}}</span>
+        <br>
+        <span class="card-text">Stock : {{product.amount}}</span>
+        <br> <br>
+        <p class="card-text">Price : {{product.price | currency:'USD'}}</p>
+        <a class="btn btn-primary" (click)="addCart(product)">Add Cart</a>
+    </div>
+
+    <div>
+        <input  min="1" type="number" value="1"
+               name="" class="form-control w-25"/>
+    </div>
+
+    <button (click)="removeFromCart(product)" type="button" class="btn btn-danger mt-3">Remove from cart</button>
+    <hr/>
+</div>

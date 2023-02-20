@@ -1,9 +1,10 @@
-export interface Data {
+export class Data {
     id?: number;
     name?: string;
     description?: string;
     image?: string;
-    price?: number;
+    price!: number;
     link?: string;
     amount?: number;
+    stok?:number;
 }

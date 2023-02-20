@@ -8,20 +8,49 @@ import {ButtonModule} from "primeng/button";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 import {TabMenuModule} from "primeng/tabmenu";
+import {ToolbarModule} from "primeng/toolbar";
+import {FileUploadModule} from "primeng/fileupload";
+import {RippleModule} from "primeng/ripple";
+import {ToastModule} from "primeng/toast";
+import {DialogModule} from "primeng/dialog";
+import {DropdownModule} from "primeng/dropdown";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {InputNumberModule} from "primeng/inputnumber";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {InputTextModule} from "primeng/inputtext";
+import {InputTextareaModule} from "primeng/inputtextarea";
 
+import {ConfirmationService, MessageService} from "primeng/api";
+import {UserProductsService} from "../service/user-products.service";
+import {ProductComponent} from "../product/product.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [ProductsComponent],
     imports: [
         CommonModule,
-        ProductsRoutingModule,
         RouterLink,
-        TableModule,
+        ProductsRoutingModule,
         ButtonModule,
+        ToastModule,
+        ToolbarModule,
+        FileUploadModule,
+        TableModule,
         RatingModule,
         FormsModule,
-        TabMenuModule
-    ]
+        DialogModule,
+        DropdownModule,
+        RadioButtonModule,
+        InputNumberModule,
+        ConfirmDialogModule,
+        RippleModule,
+        InputTextModule,
+        InputTextareaModule,
+        TabMenuModule,
+        HttpClientModule
+    ],
+    bootstrap: [ProductsComponent],
+    providers: [UserProductsService, MessageService, ConfirmationService]
 })
 export class ProductsModule {
 }

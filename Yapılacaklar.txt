@@ -1,0 +1,26 @@
+Login ekranı : 
+login guard / angular authorization yapılarak giriş sağlanacak.
+Admin / user
+
+Admin panel : 
+Sadece admin girişi ile girilecek.
++ Ürün eklenecek.
+Resimleri ve json formatını değiştir.**********
+Eklenen ürünler jsonda tutulacak.********
+Düzenle sil kalabilir.
+
+Products Page : 
+Sadece user girişi ile girilecek.
+Adminin eklediği json görüntülenecek.*******
+bazı menüler gözükmesin.*******
+****Menü Cartta(sepet) gönderilen ürünlerin sayısını yazacak. State management ngrx ile (ng-master page/home da var.)
+****Ürünlerin yanındaki butona tıklayınca detaylar gözüküp BUY butonuna tıklayınca ürünü cart a gönderecek. 
+
+
+Cart page :
+
+Local Storage ile Products Page te sepete eklenen ürünler listelenecek. (sayfayı yenileyince eklenen ürünler gitmesin diye.)
+
+Kaç adet olduğu
+Total ücreti gösterecek.
+Buy Now - Şimdi Satın Al butonuna tıklayınca satın alınanlar json dosyasına kayıt etsin.
