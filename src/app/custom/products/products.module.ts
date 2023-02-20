@@ -22,7 +22,6 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 
 import {ConfirmationService, MessageService} from "primeng/api";
 import {UserProductsService} from "../service/user-products.service";
-import {ProductComponent} from "../product/product.component";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({

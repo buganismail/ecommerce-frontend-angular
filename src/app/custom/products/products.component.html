@@ -52,7 +52,9 @@
                 <td>{{product.id}}</td>
                 <td>{{product.name}}</td>
                 <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-                         [alt]="product.name" width="100" class="shadow-4"/></td>
+                         [alt]="product.name" width="100" class="shadow-4"/>
+                </td>
+                
                 <td>{{product.price | currency:'USD'}}</td>
                 <td><span
                         [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toLowerCase() : '')">{{product.inventoryStatus}}</span>
