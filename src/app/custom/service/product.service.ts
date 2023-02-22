@@ -26,7 +26,7 @@ export class ProductService {
         return this.http.put<Product>(`${this.apiServerUrl}/product/update`, product);
     }
 
-    public deleteProduct(productId: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiServerUrl}/product/delete/${productId}`);
+    public deleteProduct(productId: number): Observable<Product> {
+        return this.http.delete<Product>(`${this.apiServerUrl}/product/delete/${productId}`);
     }
 }

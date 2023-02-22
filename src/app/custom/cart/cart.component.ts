@@ -4,6 +4,10 @@ import {Data} from "../model/data";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserProductsService} from "../service/user-products.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {Product} from "../../demo/api/product";
+import {HttpErrorResponse} from "@angular/common/http";
+import {BasketService} from "../service/basket.service";
+import {Basket} from "../../demo/api/basket";
 
 @Component({
     selector: 'app-cart',
@@ -18,6 +22,7 @@ export class CartComponent implements OnInit {
     productDialog!: boolean;
 
     products!: Data[];
+    baskets!:Basket[];
     shopProducts: Data[] = [];
 
     product!: Data;
@@ -34,17 +39,24 @@ export class CartComponent implements OnInit {
     constructor(
         private router: Router,
         private productService: UserProductsService,
+        private basketService:BasketService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private formbuilder: FormBuilder) {
     }
 
     ngOnInit() {
-        // @ts-ignore
+        //@ts-ignore
         this.products = JSON.parse(localStorage.getItem('PRODUCS'));
         console.log(this.cartTotal);
         this.cartTotal.forEach(value => {
             this.price += value.price;
+        })
+
+
+        this.formValue = this.formbuilder.group({
+            name: [''],
+            price: [''],
         })
 
         this.statuses = [
@@ -52,13 +64,7 @@ export class CartComponent implements OnInit {
             {label: 'LOWSTOCK', value: 'lowstock'},
             {label: 'OUTOFSTOCK', value: 'outofstock'}
         ];
-
-        this.formValue = this.formbuilder.group({
-            name: [''],
-            price: [''],
-        })
     }
-
 
     editProduct(product: Data) {
         this.product = {...product};

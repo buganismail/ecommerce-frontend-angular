@@ -6,5 +6,6 @@ export class Data {
     price!: number;
     link?: string;
     amount?: number;
-    stok?:number;
+    stok?: number;
+    inventoryStatus?: string;
 }

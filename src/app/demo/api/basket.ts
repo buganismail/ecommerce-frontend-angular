@@ -1,8 +1,5 @@
-interface InventoryStatus {
-    label: string;
-    value: string;
-}
-export interface Product {
+
+export interface Basket {
     id?: number;
     code?: string;
     name?: string;
