@@ -25,8 +25,6 @@ export class ShoppingComponent implements OnInit {
         cartModel.quantity = 1;
 
         this.store.dispatch({"type": "[Carts] Add Count", "cart": cartModel})
-
-
     }
 
 }

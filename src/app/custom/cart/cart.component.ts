@@ -27,7 +27,7 @@ export class CartComponent implements OnInit {
 
     product!: Data;
 
-    selectedProducts!: Data;
+    selectedProducts!: Basket [];
 
     submitted!: boolean;
 
@@ -55,11 +55,7 @@ export class CartComponent implements OnInit {
             (response: Basket[]) => {
                 this.products = response;
                 console.log(response)
-            },
-            (error: HttpErrorResponse) => {
-                alert(error.message);
-            }
-        );
+            });
     }
 
     editProduct(product: Data) {
@@ -68,20 +64,23 @@ export class CartComponent implements OnInit {
 
     }
 
-    deleteProduct(product: Data) {
+    public deleteBasket(basketId: number): void {
+        this.basketService.deleteBasket(basketId).subscribe(
+            (response: Basket) => {
+                this.getBaskets();
+            }
+        );
+        this.tikla();
+    }
+
+    deleteSelectedProducts() {
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + product.name + '?',
+            message: 'Are you sure you want to delete the selected products?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.products = this.products.filter(val => val.product.product_id !== product.id);
-                this.product = {} as Data;
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Deleted',
-                    life: 3000
-                });
+                this.selectedProducts != null;
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
             }
         });
     }
@@ -91,130 +90,17 @@ export class CartComponent implements OnInit {
         this.submitted = false;
     }
 
-    // saveProduct(product: Data) {
-    //     this.submitted = true;
-    //
-    //     if (true) {
-    //         if (this.product.id) {
-    //             this.messageService.add({
-    //                 severity: 'success',
-    //                 summary: 'Successful',
-    //                 detail: 'Product Added to Cart',
-    //                 life: 3000
-    //             });
-    //
-    //
-    //         } else {
-    //             this.product.image = 'product-placeholder.svg';
-    //             this.products.push(this.product.id);
-    //             this.messageService.add({
-    //                 severity: 'success',
-    //                 summary: 'Successful',
-    //                 detail: 'Product Created',
-    //                 life: 3000
-    //             });
-    //         }
-    //
-    //         this.shopProducts.push(product);
-    //
-    //         localStorage.setItem("Products", JSON.stringify(this.shopProducts));
-    //
-    //
-    //         this.products = [...this.products];
-    //         this.productDialog = false;
-    //         this.product = {} as Data;
-    //     }
-    // }
+    tikla(){
+        console.log("selecet",this.selectedProducts)
+        this.selectedProducts.forEach((value)=>{
+            this.basketService.deleteBasket(value.basket_id).subscribe(
+                (response:Basket) =>{
+                    console.log("tikla",response);
+                    this.getBaskets();
+                }
+            )
+        })
 
-}
-
-
-/*
-* constructor(private auth: AuthService) {
-}
-
-ngOnInit(): void {
-    this.CartDetails();
-    this.loadCart();
-}
-
-getCartDetails: any = [];
-
-CartDetails() {
-    if (localStorage.getItem('localCard')) {
-        // @ts-ignore
-        this.getCartDetails = JSON.parse(localStorage.getItem('localCard'));
     }
+
 }
-
-incQnt({prodId, qnt}: { prodId: any, qnt: any }) {
-    for (let i = 0; i < this.getCartDetails.length; i++) {
-        if (this.getCartDetails[i].id === prodId) {
-            if (qnt != 5)
-                this.getCartDetails[i].amount = parseInt(qnt) + 1;
-        }
-    }
-    localStorage.setItem('localCard', JSON.stringify(this.getCartDetails));
-    this.loadCart();
-}
-
-decQnt({prodId, qnt}: { prodId: any, qnt: any }) {
-    for (let i = 0; i < this.getCartDetails.length; i++) {
-        if (this.getCartDetails[i].id === prodId) {
-            if (qnt != 1)
-                this.getCartDetails[i].amount = parseInt(qnt) - 1;
-        }
-    }
-    localStorage.setItem('localCard', JSON.stringify(this.getCartDetails));
-    this.loadCart();
-}
-
-total: number = 0;
-
-loadCart() {
-    if
-    (localStorage.getItem('localCard')) {
-        // @ts-ignore
-        this.getCartDetails = JSON.parse(localStorage.getItem('localCard'));
-        this.total = this.getCartDetails.reduce(function (acc: any, val: any) {
-            return acc + (val.price * val.amount);
-        }, 0);
-    }
-}
-
-removeall() {
-    localStorage.removeItem
-    ('localCard');
-    this.getCartDetails = [];
-    this.total = 0;
-    this.cartNumber = 0;
-    this.auth.cartSubject.next
-    (this.cartNumber);
-}
-
-singleDelete(getCartDetail: number) {
-    console.log(getCartDetail);
-    if (localStorage.getItem('localCard')) {
-        // @ts-ignore
-        this.getCartDetails = JSON.parse(localStorage.getItem('localCard'));
-        for (let i = 0; i < this.getCartDetails.length; i++) {
-            if (this.getCartDetails[i].id === getCartDetail) {
-                this.getCartDetails.splice(i, 1);
-                localStorage.setItem('localCard', JSON.stringify(this.getCartDetails));
-                this.loadCart();
-                this.cartNumberFunc();
-            }
-        }
-    }
-}
-
-cartNumber: number = 0;
-
-cartNumberFunc() {
-    // @ts-ignore
-    var cartValue = JSON.parse(localStorage.getItem('localCard'));
-    this.cartNumber = cartValue.length;
-    this.auth.cartSubject.next
-    (this.cartNumber);
-}
-*/

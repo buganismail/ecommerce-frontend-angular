@@ -20,10 +20,11 @@ export class BasketService {
     }
 
     public addBasket(basket: Product) {
-        this.http.post<Basket>(`${this.apiServerUrl}/basket/add`, basket).subscribe((data)=>{
-            console.log("Data" , data);
+        this.http.post<Basket>(`${this.apiServerUrl}/basket/add`, basket).subscribe((data) => {
+            console.log("Data", data);
         })
     }
+
     public updateBasket(basket: Basket): Observable<Basket> {
         return this.http.put<Basket>(`${this.apiServerUrl}/basket/update`, basket);
     }

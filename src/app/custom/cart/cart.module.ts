@@ -23,6 +23,7 @@ import {TabMenuModule} from "primeng/tabmenu";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {UserProductsService} from "../service/user-products.service";
 import {ProductComponent} from "../product/product.component";
+import {CheckboxModule} from "primeng/checkbox";
 
 @NgModule({
     declarations: [CartComponent],
@@ -45,7 +46,8 @@ import {ProductComponent} from "../product/product.component";
         RippleModule,
         InputTextModule,
         InputTextareaModule,
-        TabMenuModule
+        TabMenuModule,
+        CheckboxModule
     ],
     bootstrap: [ProductComponent],
     providers: [UserProductsService, MessageService, ConfirmationService]
