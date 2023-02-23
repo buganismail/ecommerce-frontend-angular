@@ -8,6 +8,8 @@ import {AuthService} from "../../auth/auth.service";
 import {ProductService} from "../service/product.service";
 import {Product} from "../../demo/api/product";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Basket} from "../../demo/api/basket";
+import {BasketService} from "../service/basket.service";
 
 @Component({
     selector: 'app-products',
@@ -27,6 +29,10 @@ export class ProductsComponent implements OnInit {
     public products!: Product[];
     shopProducts: Data[] = [];
 
+    basket!: Basket;
+
+    public baskets!: Basket[];
+
     product!: Data;
 
     selectedProducts!: Data;
@@ -38,13 +44,15 @@ export class ProductsComponent implements OnInit {
     cardItem: number = 0;
     cartNumber: number = 0;
 
-    constructor(
-        private productService: ProductService,
-        private userProductService: UserProductsService,
-        private messageService: MessageService,
-        private confirmationService: ConfirmationService,
-        private formbuilder: FormBuilder,
-        private authService: AuthService
+    itemsCard: any = [];
+
+    constructor(private basketService: BasketService,
+                private productService: ProductService,
+                private userProductService: UserProductsService,
+                private messageService: MessageService,
+                private confirmationService: ConfirmationService,
+                private formbuilder: FormBuilder,
+                private authService: AuthService
     ) {
         this.authService.cartSubject.subscribe((data) => {
             this.cardItem = data;
@@ -88,41 +96,47 @@ export class ProductsComponent implements OnInit {
         }
     }
 
-    itemsCard: any = [];
 
     showDetail(product: Data) {
         this.product = {...product};
         this.productDialog = true;
     }
 
-    addToCard(category: Data) {
-        let cartData = localStorage.getItem('localCart')
-        if (cartData == null) {
-            let storeData: any = [];
-            storeData.push(category)
-            localStorage.setItem('localCart', JSON.stringify(storeData))
-        } else {
-            var idCard = category.id;
-            let index: number = -1;
-            // @ts-ignore
-            this.itemsCard = JSON.parse(localStorage.getItem('localCard'))
-            for (let i = 0; i < this.itemsCard.length; i++) {
-                // @ts-ignore
-                if (parseInt(<string>idCard) === parseInt(this.itemsCard[i].id)) {
-                    this.itemsCard[i].amount = category.amount
-                    index = i
-                    break;
-                }
-            }
-            if (index == -1) {
-                this.itemsCard.push(category)
-                localStorage.setItem('localCart', JSON.stringify(this.itemsCard))
-            } else {
-                localStorage.setItem('localCart', JSON.stringify(this.itemsCard))
-            }
-        }
+    addToCard(product:Product) {
 
-        this.cartNumberFunc();
+        this.submitted = true;
+
+        this.basketService.addBasket(product)
+
+
+        //  let cartData;
+        //  if (cartData == null) {
+        //      let storeData: any = [];
+        //      storeData.push(basket)
+        //      localStorage.setItem('localCart', JSON.stringify(storeData))
+        //  } else {
+        //      var idCard = basket.basket_id;
+        //      let index: number = -1;
+        //      // @ts-ignore
+        //      this.itemsCard = JSON.parse(localStorage.getItem('localCard'))
+        //      for (let i = 0; i < this.itemsCard.length; i++) {
+        //          // @ts-ignore
+        //          if (parseInt(<string>idCard) === parseInt(this.itemsCard[i].id)) {
+        //              this.itemsCard[i].amount = basket
+        //              index = i
+        //              break;
+        //          }
+        //      }
+        //      if (index == -1) {
+        //          this.itemsCard.push(basket)
+        //          localStorage.setItem('localCart', JSON.stringify(this.itemsCard))
+        //      } else {
+        //          localStorage.setItem('localCart', JSON.stringify(this.itemsCard))
+        //      }
+        //  }
+        // this.basketService.addBasket(basket);
+        //
+        //  this.cartNumberFunc();
     }
 
     cardItemFunc() {
@@ -147,5 +161,26 @@ export class ProductsComponent implements OnInit {
         this.authService.cartSubject.next(this.cartNumber)
     }
 
+    findIndexById(id: number): number {
+        let index = -1;
+        for (let i = 0; i < this.baskets.length; i++) {
+            if (this.baskets[i].basket_id === id) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    editProduct(basket: Basket) {
+        this.basket = {...basket};
+        this.productDialog = true;
+    }
+
+    hideDialog() {
+        this.productDialog = false;
+        this.submitted = false;
+    }
 
 }

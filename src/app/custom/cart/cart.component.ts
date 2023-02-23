@@ -21,8 +21,8 @@ export class CartComponent implements OnInit {
     price: number = 0;
     productDialog!: boolean;
 
-    products!: Data[];
-    baskets!:Basket[];
+    products!: Basket[];
+    baskets!: Basket[];
     shopProducts: Data[] = [];
 
     product!: Data;
@@ -39,31 +39,27 @@ export class CartComponent implements OnInit {
     constructor(
         private router: Router,
         private productService: UserProductsService,
-        private basketService:BasketService,
+        private basketService: BasketService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private formbuilder: FormBuilder) {
     }
 
     ngOnInit() {
-        //@ts-ignore
-        this.products = JSON.parse(localStorage.getItem('PRODUCS'));
-        console.log(this.cartTotal);
-        this.cartTotal.forEach(value => {
-            this.price += value.price;
-        })
+        this.getBaskets();
+        // this.products = JSON.parse(localStorage.getItem('PRODUCS'));
+    }
 
-
-        this.formValue = this.formbuilder.group({
-            name: [''],
-            price: [''],
-        })
-
-        this.statuses = [
-            {label: 'INSTOCK', value: 'instock'},
-            {label: 'LOWSTOCK', value: 'lowstock'},
-            {label: 'OUTOFSTOCK', value: 'outofstock'}
-        ];
+    public getBaskets(): void {
+        this.basketService.getBaskets().subscribe(
+            (response: Basket[]) => {
+                this.products = response;
+                console.log(response)
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
     }
 
     editProduct(product: Data) {
@@ -78,7 +74,7 @@ export class CartComponent implements OnInit {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.products = this.products.filter(val => val.id !== product.id);
+                this.products = this.products.filter(val => val.product.product_id !== product.id);
                 this.product = {} as Data;
                 this.messageService.add({
                     severity: 'success',
@@ -95,40 +91,40 @@ export class CartComponent implements OnInit {
         this.submitted = false;
     }
 
-    saveProduct(product: Data) {
-        this.submitted = true;
-
-        if (true) {
-            if (this.product.id) {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Added to Cart',
-                    life: 3000
-                });
-
-
-            } else {
-                this.product.image = 'product-placeholder.svg';
-                this.products.push(this.product);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Created',
-                    life: 3000
-                });
-            }
-
-            this.shopProducts.push(product);
-
-            localStorage.setItem("Products", JSON.stringify(this.shopProducts));
-
-
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {} as Data;
-        }
-    }
+    // saveProduct(product: Data) {
+    //     this.submitted = true;
+    //
+    //     if (true) {
+    //         if (this.product.id) {
+    //             this.messageService.add({
+    //                 severity: 'success',
+    //                 summary: 'Successful',
+    //                 detail: 'Product Added to Cart',
+    //                 life: 3000
+    //             });
+    //
+    //
+    //         } else {
+    //             this.product.image = 'product-placeholder.svg';
+    //             this.products.push(this.product.id);
+    //             this.messageService.add({
+    //                 severity: 'success',
+    //                 summary: 'Successful',
+    //                 detail: 'Product Created',
+    //                 life: 3000
+    //             });
+    //         }
+    //
+    //         this.shopProducts.push(product);
+    //
+    //         localStorage.setItem("Products", JSON.stringify(this.shopProducts));
+    //
+    //
+    //         this.products = [...this.products];
+    //         this.productDialog = false;
+    //         this.product = {} as Data;
+    //     }
+    // }
 
 }
 

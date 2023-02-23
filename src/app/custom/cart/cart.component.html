@@ -4,7 +4,8 @@
     <!--    New, Delete Bar-->
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple type="button" label="Products"  icon="pi pi-shopping-bag"  class="mr-3 p-button-raised" [routerLink]="['/products']"></button>
+            <button pButton pRipple type="button" label="Products" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/products']"></button>
             <button pButton pRipple type="button" label="Sign Out" icon="pi pi-sign-out" class="mr-3 p-button-danger"
                     [routerLink]="['']"></button>
         </ng-template>
@@ -41,14 +42,14 @@
             </tr>
         </ng-template>
         <!--  Body  -->
-        <ng-template pTemplate="body" let-product>
+        <ng-template pTemplate="body" let-products>
             <tr>
-                <td>{{product.name}}</td>
-                <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-                         [alt]="product.name" width="100" class="shadow-4"/></td>
-                <td>{{product.price | currency:'USD'}}</td>
+                <td>{{products.product.name}}</td>
+                <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + products.product.image"
+                         [alt]="products.product.name" width="100" class="shadow-4"/></td>
+                <td>{{products.product.price | currency:'USD'}}</td>
                 <td>
-                    {{product.stok}}
+                    {{products.product.stok}}
                 </td>
 
             </tr>
@@ -79,9 +80,9 @@
         </div>
     </ng-template>
 
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Buy" icon="pi pi-wallet" class="p-button-text" (click)="saveProduct(product)"></button>
-    </ng-template>
+    <!--    <ng-template pTemplate="footer">-->
+    <!--        <button pButton pRipple label="Buy" icon="pi pi-wallet" class="p-button-text" (click)="saveProduct(product)"></button>-->
+    <!--    </ng-template>-->
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

@@ -79,7 +79,7 @@ export class CrudComponent implements OnInit {
 
     confirmDelete() {
         this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
+        this.products = this.products.filter(val => val.product_id !== this.product.product_id);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         this.product = {};
     }

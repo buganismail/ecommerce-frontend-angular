@@ -63,9 +63,6 @@ export class AdminPanelComponent implements OnInit {
         );
     }
 
-    // public deleteProduct(product: Product) {
-    //     this.productService.deleteProduct(product.id);
-    // }
     public deleteProduct(productId: number): void {
         this.productService.deleteProduct(productId).subscribe(
             (response: Product) => {
@@ -80,8 +77,8 @@ export class AdminPanelComponent implements OnInit {
         this.productService.addProduct(product).subscribe(
             (response: Product) => {
                 if (true) {
-                    if (this.product.id) {
-                        this.products[this.findIndexById(this.product.id)] = this.product;
+                    if (this.product.product_id) {
+                        this.products[this.findIndexById(this.product.product_id)] = this.product;
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Successful',
@@ -133,7 +130,7 @@ export class AdminPanelComponent implements OnInit {
     findIndexById(id: number): number {
         let index = -1;
         for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
+            if (this.products[i].product_id === id) {
                 index = i;
                 break;
             }
