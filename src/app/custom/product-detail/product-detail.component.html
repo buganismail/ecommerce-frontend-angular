@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+<div class="container" *ngIf="product !== undefined">
+    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+         [alt]="product.name" width="500" class="shadow-4"/>
+    <div class="details">
+        <div class="header">
+            <span class="name">{{product.name}}</span>
+        </div>
+        <div class="explanation">
+            <span class="card-text">Açıklama : {{product?.description}}</span>
+        </div>
+        <div class="price">
+            <span class="card-text">{{product.price | currency:'USD'}}</span>
+        </div>
+        <a class="btn btn-primary" (click)="addToCard(product)">Add Cart</a>
+    </div>
+</div>
+
+<app-comments currentUserId="1"></app-comments>

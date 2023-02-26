@@ -1,0 +1,9 @@
+.card {
+    position: inherit;
+    margin: 2% 18% 0% 17%;
+
+    /*margin: inherit;*/
+    /*top:50%;*/
+    /*left: 50%;*/
+    transform: translateX(0%) translateY(0%);
+}

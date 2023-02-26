@@ -23,6 +23,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {UserProductsService} from "../service/user-products.service";
 import {HttpClientModule} from "@angular/common/http";
+import {ShoppingModule} from "../shopping/shopping.module";
 
 @NgModule({
     declarations: [ProductsComponent],
@@ -46,7 +47,8 @@ import {HttpClientModule} from "@angular/common/http";
         InputTextModule,
         InputTextareaModule,
         TabMenuModule,
-        HttpClientModule
+        HttpClientModule,
+        ShoppingModule
     ],
     bootstrap: [ProductsComponent],
     providers: [UserProductsService, MessageService, ConfirmationService]

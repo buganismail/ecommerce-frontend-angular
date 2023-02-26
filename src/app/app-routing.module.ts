@@ -10,10 +10,12 @@ import {NavbarComponent} from "./custom/layouts/navbar/navbar.component";
             {
                 path: '', component: AppComponent,
                 children: [
-                    { path: '', loadChildren: () => import('./custom/login/login.module').then(m => m.LoginModule) },
+                    { path: 'login', loadChildren: () => import('./custom/login/login.module').then(m => m.LoginModule) },
                     { path: 'adminpanel', loadChildren: () => import('./custom/admin-panel/admin-panel.module').then(m => m.AdminPanelModule) },
                     { path: 'products', loadChildren: () => import('./custom/products/products.module').then(m => m.ProductsModule) },
-                    { path: 'product/:id', loadChildren: () => import('./custom/product/product.module').then(m => m.ProductModule) },
+                    { path: 'product-detail/:product_id', loadChildren: () => import('./custom/product-detail/product-detail.module').then(m => m.ProductDetailModule) },
+                    { path: '', redirectTo:'products', pathMatch:'full'},
+
                     { path: 'shopping', loadChildren: () => import('./custom/shopping/shopping.module').then(m => m.ShoppingModule) },
                     { path: 'cart', loadChildren: () => import('./custom/cart/cart.module').then(m => m.CartModule) },
 

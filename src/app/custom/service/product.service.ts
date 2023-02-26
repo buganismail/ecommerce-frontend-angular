@@ -3,17 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Product} from "../../demo/api/product";
 import {environment} from "../../../environments/environment";
-
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService {
-
     private apiServerUrl = environment.apiBaseUrl;
-
     constructor(private http: HttpClient) {
     }
-
     public getProducts(): Observable<Product[]> {
         return this.http.get<Product[]>(`${this.apiServerUrl}/product/all`);
     }
@@ -28,5 +24,9 @@ export class ProductService {
 
     public deleteProduct(productId: number): Observable<Product> {
         return this.http.delete<Product>(`${this.apiServerUrl}/product/delete/${productId}`);
+    }
+
+    public getProductById(productId: number): Observable<Product["product_id"]> {
+        return this.http.get<Product["product_id"]>(`${this.apiServerUrl}/product/find/${productId}`);
     }
 }

@@ -22,6 +22,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {UserProductsService} from "../service/user-products.service";
 import {TabMenuModule} from "primeng/tabmenu";
+import {ShoppingModule} from "../shopping/shopping.module";
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {TabMenuModule} from "primeng/tabmenu";
         RippleModule,
         InputTextModule,
         InputTextareaModule,
-        TabMenuModule
+        TabMenuModule,
+        ShoppingModule
     ],
     bootstrap: [AdminPanelComponent],
     providers: [UserProductsService, MessageService, ConfirmationService]

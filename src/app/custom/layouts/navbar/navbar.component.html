@@ -1,26 +1,22 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/adminpanel">Admin Panel</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="/products">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">
-                        Shopping
-                        <span class="badge bg-danger">{{cartCount$}}</span>
-                    </a>
-                </li>
-            </ul>
-            <!--            <form class="d-flex" role="search">-->
-            <!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-            <!--                <button class="btn btn-outline-success" type="submit">Search</button>-->
-            <!--            </form>-->
-        </div>
-    </div>
-</nav>
+<div class="card">
+    <!--    New, Delete Bar-->
+    <p-toolbar styleClass="container mb-1 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple type="button" label="Admin Panel" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/adminpanel']"></button>
+            <button pButton pRipple type="button" label="Products" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/products']"></button>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success mr-6" type="submit">Search</button>
+            </form>
+            <button pButton pRipple type="button" label="Basket" icon="pi pi-shopping-cart"
+                    class="mr-1 p-button-raised" [routerLink]="['/cart']"></button>
+            <a class="nav-link mr-5" routerLink="/cart">
+                <span class="badge bg-danger">{{cartCount$}}</span>
+            </a>
+            <button pButton pRipple type="button" label="Sign Out" icon="pi pi-sign-out"
+                    class="mr-3 p-button-danger" [routerLink]="['/login']"></button>
+        </ng-template>
+    </p-toolbar>
+</div>
