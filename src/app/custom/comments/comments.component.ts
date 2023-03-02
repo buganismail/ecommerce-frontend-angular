@@ -5,7 +5,6 @@ import {CommentInterface} from "../model/comment.interface";
 @Component({
     selector: 'app-comments',
     templateUrl: './comments.component.html',
-    styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
     @Input() currentUserId!: string;
@@ -20,6 +19,5 @@ export class CommentsComponent implements OnInit {
             this.comments = comments;
         })
     }
-
 
 }

@@ -1,8 +1,7 @@
-import {RouterModule, Routes} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {NotfoundComponent} from './demo/components/notfound/notfound.component';
 import {AppComponent} from "./app.component";
-import {NavbarComponent} from "./custom/layouts/navbar/navbar.component";
 
 @NgModule({
     imports: [
@@ -15,9 +14,9 @@ import {NavbarComponent} from "./custom/layouts/navbar/navbar.component";
                     { path: 'products', loadChildren: () => import('./custom/products/products.module').then(m => m.ProductsModule) },
                     { path: 'product-detail/:product_id', loadChildren: () => import('./custom/product-detail/product-detail.module').then(m => m.ProductDetailModule) },
                     { path: '', redirectTo:'products', pathMatch:'full'},
+                    { path: 'search/:searchTerm', loadChildren: () => import('./custom/products/products.module').then(m => m.ProductsModule) },
 
-                    { path: 'shopping', loadChildren: () => import('./custom/shopping/shopping.module').then(m => m.ShoppingModule) },
-                    { path: 'cart', loadChildren: () => import('./custom/cart/cart.module').then(m => m.CartModule) },
+                    { path: 'basket', loadChildren: () => import('./custom/cart/cart.module').then(m => m.CartModule) },
 
                     { path: 'deneme/home', loadChildren: () => import('./custom/deneme/home/home.module').then(m => m.HomeModule) },
                     { path: 'deneme/header', loadChildren: () => import('./custom/deneme/header/header.module').then(m => m.HeaderModule) },

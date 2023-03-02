@@ -12,6 +12,7 @@ import {Basket} from "../../demo/api/basket";
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
+    styleUrls: ['/cart.component.css']
 })
 export class CartComponent implements OnInit {
 
@@ -53,7 +54,6 @@ export class CartComponent implements OnInit {
         this.basketService.getBaskets().subscribe(
             (response: Basket[]) => {
                 this.products = response;
-                console.log(response)
             });
     }
 
@@ -90,11 +90,9 @@ export class CartComponent implements OnInit {
     }
 
     tikla(){
-        console.log("selecet",this.selectedProducts)
         this.selectedProducts.forEach((value)=>{
             this.basketService.deleteBasket(value.basket_id).subscribe(
                 (response:Basket) =>{
-                    console.log("tikla",response);
                     this.getBaskets();
                 }
             )

@@ -1,15 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {UserProductsService} from "../service/user-products.service";
 import {Data} from "../model/data";
-import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
-import {Router} from "@angular/router";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {ActivatedRoute} from "@angular/router";
+import {FormBuilder} from "@angular/forms";
 import {AuthService} from "../../auth/auth.service";
 import {ProductService} from "../service/product.service";
 import {Product} from "../../demo/api/product";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Basket} from "../../demo/api/basket";
 import {BasketService} from "../service/basket.service";
+import {CartModel} from "../model/cart.model";
+import {Store} from "@ngrx/store";
 
 @Component({
     selector: 'app-products',
@@ -46,16 +48,29 @@ export class ProductsComponent implements OnInit {
 
     itemsCard: any = [];
 
-    constructor(private basketService: BasketService,
-                private productService: ProductService,
-                private userProductService: UserProductsService,
-                private messageService: MessageService,
-                private confirmationService: ConfirmationService,
-                private formbuilder: FormBuilder,
-                private authService: AuthService
+    searchText: string = '';
+
+    cartCount$ = 0;
+    carts$: CartModel[] = [];
+
+
+    constructor(
+        private store: Store<{ "carts": CartModel[] }>,
+        private basketService: BasketService,
+        private productService: ProductService,
+        private userProductService: UserProductsService,
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
+        private formbuilder: FormBuilder,
+        private authService: AuthService,
+        private route: ActivatedRoute
     ) {
         this.authService.cartSubject.subscribe((data) => {
             this.cardItem = data;
+        })
+        this.store.select("carts").subscribe(res => {
+            this.cartCount$ = res.length;
+            this.carts$ = res;
         })
     }
 
@@ -64,12 +79,15 @@ export class ProductsComponent implements OnInit {
         this.getProducts();
 
         this.cardItemFunc();
+
+
     }
 
     public getProducts(): void {
         this.productService.getProducts().subscribe(
             (response: Product[]) => {
                 this.products = response;
+                // console.log("product response", response)
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -102,7 +120,7 @@ export class ProductsComponent implements OnInit {
         this.productDialog = true;
     }
 
-    addToCard(product:Product) {
+    addToCard(product: Product) {
 
         this.submitted = true;
 
@@ -181,6 +199,10 @@ export class ProductsComponent implements OnInit {
     hideDialog() {
         this.productDialog = false;
         this.submitted = false;
+    }
+
+    onSearchTextEntered(searchValue: string) {
+        this.searchText = searchValue;
     }
 
 }

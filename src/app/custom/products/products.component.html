@@ -1,9 +1,32 @@
-<app-navbar></app-navbar>
+
+<div class="card">
+    <!--    New, Delete Bar-->
+    <p-toolbar styleClass="container mb-1 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple type="button" label="Admin Panel" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/adminpanel']"></button>
+            <button pButton pRipple type="button" label="Products" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/products']"></button>
+            <app-search (searchTextChanged)="onSearchTextEntered($event)" pInputText></app-search>
+
+            <button pButton pRipple type="button" label="Basket" icon="pi pi-shopping-cart"
+                    class="mr-1 p-button-raised" [routerLink]="['/basket']"></button>
+            <a class="nav-link mr-5" routerLink="/cart">
+                <span class="badge bg-danger">{{cartCount$}}</span>
+            </a>
+            <button pButton pRipple type="button" label="Sign Out" icon="pi pi-sign-out"
+                    class="mr-3 p-button-danger" [routerLink]="['/login']"></button>
+        </ng-template>
+    </p-toolbar>
+</div>
+
 
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-3 mt-4" *ngFor="let product of products let index = index">
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-3 mt-4" *ngFor="let product of products">
+            <!--        --------------------------------- -->
+            <div class="card" style="width: 18rem;"
+                 *ngIf="searchText ==='' || product.name?.toLowerCase()?.includes(searchText) ">
                 <a [routerLink]="['/product-detail', product.product_id]">
                     <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
                          width="200" class="shadow-4"/>

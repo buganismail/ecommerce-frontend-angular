@@ -33,7 +33,9 @@ export class ProductComponent {
     }
 
     ngOnInit() {
-        this.userProductService.getProducts().then(data => this.products = data);
+        this.userProductService.getProducts().then((data) => {
+            this.products = data;
+        });
 
         this.items = [
             {label: 'Products', icon: 'pi pi-fw pi-home'},
@@ -80,7 +82,7 @@ export class ProductComponent {
         cartModel.product = product;
         cartModel.quantity = 1;
 
-        this.store.dispatch({"type": "[Carts] Add Count", "cart": cartModel})
+        this.store.dispatch({"type": "[Carts] Add Count", "basket": cartModel})
 
 
     }

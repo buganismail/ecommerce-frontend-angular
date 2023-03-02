@@ -1,4 +1,18 @@
-<app-navbar></app-navbar>
+<div class="card">
+    <!--    New, Delete Bar-->
+    <p-toolbar styleClass="container mb-1 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple type="button" label="Admin Panel" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/adminpanel']"></button>
+            <button pButton pRipple type="button" label="Products" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/products']"></button>
+            <app-search (searchTextChanged)="onSearchTextEntered($event)" pInputText></app-search>
+
+            <button pButton pRipple type="button" label="Sign Out" icon="pi pi-sign-out"
+                    class="mr-3 p-button-danger" [routerLink]="['/login']"></button>
+        </ng-template>
+    </p-toolbar>
+</div>
 
 <p-toast></p-toast>
 
@@ -52,7 +66,7 @@
         </ng-template>
         <!--  Body  -->
         <ng-template pTemplate="body" let-product>
-            <tr>
+            <tr *ngIf="searchText ==='' || product.name?.toLowerCase()?.includes(searchText) ">
                 <td>{{product.product_id}}</td>
                 <td>{{product.name}}</td>
                 <td>{{product.description}}</td>

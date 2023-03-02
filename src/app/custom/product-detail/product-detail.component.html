@@ -1,4 +1,21 @@
-<app-navbar></app-navbar>
+<div class="card">
+    <!--    New, Delete Bar-->
+    <p-toolbar styleClass="container mb-1 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple type="button" label="Products" icon="pi pi-shopping-bag"
+                    class="mr-3 p-button-raised" [routerLink]="['/products']"></button>
+
+            <button pButton pRipple type="button" label="Basket" icon="pi pi-shopping-cart"
+                    class="mr-1 p-button-raised" [routerLink]="['/basket']"></button>
+            <a class="nav-link mr-5" routerLink="/cart">
+                <span class="badge bg-danger">{{cartCount$}}</span>
+            </a>
+            <button pButton pRipple type="button" label="Sign Out" icon="pi pi-sign-out"
+                    class="mr-3 p-button-danger" [routerLink]="['/login']"></button>
+        </ng-template>
+    </p-toolbar>
+</div>
+
 <div class="container" *ngIf="product !== undefined">
     <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
          [alt]="product.name" width="500" class="shadow-4"/>
@@ -7,7 +24,7 @@
             <span class="name">{{product.name}}</span>
         </div>
         <div class="explanation">
-            <span class="card-text">Açıklama : {{product?.description}}</span>
+            <span class="card-text">Açıklama : {{product.description}}</span>
         </div>
         <div class="price">
             <span class="card-text">{{product.price | currency:'USD'}}</span>
@@ -15,5 +32,12 @@
         <a class="btn btn-primary" (click)="addToCard(product)">Add Cart</a>
     </div>
 </div>
+
+<div class="container">
+
+</div>
+
+<!--<app-comments currentUserId="1"></app-comments>-->
+<!--<app-comments [comments]="products" *ngIf="products"></app-comments>-->
 
 <app-comments currentUserId="1"></app-comments>

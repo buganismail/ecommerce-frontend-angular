@@ -8,7 +8,7 @@ export const CartReducers = createReducer(
     on(changeCartNumber, (state, cart) => {
         return {
             ...state,
-            cart: cart.payload,
+            basket: cart.payload,
         }
     })
 )

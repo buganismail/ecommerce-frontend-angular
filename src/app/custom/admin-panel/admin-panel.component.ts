@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Data} from "../model/data";
 import {UserProductsService} from "../service/user-products.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {Product} from "../../demo/api/product";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ProductService} from "../service/product.service";
+import {CartModel} from "../model/cart.model";
+import {Store} from "@ngrx/store";
 
 @Component({
     selector: 'app-admin-panel',
@@ -19,6 +21,9 @@ import {ProductService} from "../service/product.service";
     styleUrls: ['./admin-panel.component.css'],
 })
 export class AdminPanelComponent implements OnInit {
+
+    cartCount$ = 0;
+    carts$: CartModel[] = [];
     productDialog!: boolean;
 
     public products!: Product[];
@@ -33,11 +38,19 @@ export class AdminPanelComponent implements OnInit {
 
     shopProducts: Data[] = [];
 
+    searchText: string = '';
+
     constructor(
+        private store: Store<{ "carts": CartModel[] }>,
         private productService: ProductService,
         private userProductService: UserProductsService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService) {
+
+        this.store.select("carts").subscribe(res => {
+            this.cartCount$ = res.length;
+            this.carts$ = res;
+        })
     }
 
     ngOnInit() {
@@ -146,5 +159,9 @@ export class AdminPanelComponent implements OnInit {
             id += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         return id;
+    }
+
+    onSearchTextEntered(searchValue: string) {
+        this.searchText = searchValue;
     }
 }

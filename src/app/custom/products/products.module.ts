@@ -23,10 +23,10 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {UserProductsService} from "../service/user-products.service";
 import {HttpClientModule} from "@angular/common/http";
-import {ShoppingModule} from "../shopping/shopping.module";
+import {SearchComponent} from "../search/search.component";
 
 @NgModule({
-    declarations: [ProductsComponent],
+    declarations: [ProductsComponent, SearchComponent],
     imports: [
         CommonModule,
         RouterLink,
@@ -48,10 +48,13 @@ import {ShoppingModule} from "../shopping/shopping.module";
         InputTextareaModule,
         TabMenuModule,
         HttpClientModule,
-        ShoppingModule
     ],
     bootstrap: [ProductsComponent],
-    providers: [UserProductsService, MessageService, ConfirmationService]
+    providers: [UserProductsService, MessageService, ConfirmationService],
+
+    exports: [
+        SearchComponent
+    ]
 })
 export class ProductsModule {
 }

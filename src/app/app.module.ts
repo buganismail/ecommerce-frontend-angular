@@ -55,7 +55,6 @@ import {ProductService} from "./custom/service/product.service";
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, UserProductsService, ProductService
     ],
-
     bootstrap: [AppComponent]
 })
 export class AppModule {
