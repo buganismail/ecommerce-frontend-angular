@@ -2,6 +2,9 @@ import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {NotfoundComponent} from './demo/components/notfound/notfound.component';
 import {AppComponent} from "./app.component";
+import {AuthGuard} from "./custom/guards/auth.guard";
+import {AdminGuard} from "./custom/guards/admin.guard";
+import {UserGuard} from "./custom/guards/user.guard";
 
 @NgModule({
     imports: [
@@ -9,18 +12,15 @@ import {AppComponent} from "./app.component";
             {
                 path: '', component: AppComponent,
                 children: [
-                    { path: 'login', loadChildren: () => import('./custom/login/login.module').then(m => m.LoginModule) },
-                    { path: 'adminpanel', loadChildren: () => import('./custom/admin-panel/admin-panel.module').then(m => m.AdminPanelModule) },
-                    { path: 'products', loadChildren: () => import('./custom/products/products.module').then(m => m.ProductsModule) },
-                    { path: 'product-detail/:product_id', loadChildren: () => import('./custom/product-detail/product-detail.module').then(m => m.ProductDetailModule) },
-                    { path: '', redirectTo:'products', pathMatch:'full'},
-                    { path: 'search/:searchTerm', loadChildren: () => import('./custom/products/products.module').then(m => m.ProductsModule) },
+                    { path: 'login', loadChildren: () => import('./custom/login/loginpage.module').then(m => m.LoginpageModule) },
 
-                    { path: 'basket', loadChildren: () => import('./custom/cart/cart.module').then(m => m.CartModule) },
-
-                    { path: 'deneme/home', loadChildren: () => import('./custom/deneme/home/home.module').then(m => m.HomeModule) },
-                    { path: 'deneme/header', loadChildren: () => import('./custom/deneme/header/header.module').then(m => m.HeaderModule) },
-                    { path: 'deneme/cart', loadChildren: () => import('./custom/deneme/cart/cart.module').then(m => m.CartModule) },
+                    { path: 'register', loadChildren: () => import('./custom/user/register/register.module').then(m => m.RegisterModule) },
+                    { path: '', redirectTo:'login', pathMatch:'full'},
+                    { path: 'adminpanel', loadChildren: () => import('./custom/admin/admin-panel/admin-panel.module').then(m => m.AdminPanelModule),canActivate: [AdminGuard],},
+                    { path: 'products', loadChildren: () => import('./custom/user/products/products.module').then(m => m.ProductsModule),canActivate: [UserGuard], },
+                    { path: 'product-detail/:product_id', loadChildren: () => import('./custom/user/product-detail/product-detail.module').then(m => m.ProductDetailModule),canActivate: [UserGuard], },
+                    { path: 'search/:searchTerm', loadChildren: () => import('./custom/user/products/products.module').then(m => m.ProductsModule),canActivate: [UserGuard], },
+                    { path: 'basket', loadChildren: () => import('./custom/user/cart/cart.module').then(m => m.CartModule),canActivate: [UserGuard], },
 
                     { path: 'dashboard2', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },

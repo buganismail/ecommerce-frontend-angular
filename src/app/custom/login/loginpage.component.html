@@ -1,0 +1,24 @@
+<div class="card">
+    <div style="text-align:center">
+        <h5>Sign In</h5>
+    </div>
+    <div class="p-fluid">
+        <form (ngSubmit)="onSubmit()">
+            <br>
+            <span class="p-float-label">
+                    <input pInputText name="email" [(ngModel)]="email"/>
+                    <label [htmlFor]="email">Email</label>
+           </span>
+            <br>
+            <span class="p-float-label">
+                <p-password name="password" type="password" [(ngModel)]="password"
+                            [toggleMask]="true"></p-password>
+                <label [htmlFor]="password">Password</label>
+            </span>
+            <p></p>
+            <button pButton label="Login" type="submit"></button>
+        </form>
+        <p-button label="Create Account" styleClass="p-button-link" [routerLink]="['/register']"></p-button>
+
+    </div>
+</div>

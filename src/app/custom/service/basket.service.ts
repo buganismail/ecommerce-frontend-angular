@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Basket} from "../../demo/api/basket";
 import {environment} from "../../../environments/environment";
 import {Product} from "../../demo/api/product";
+import {BasketModel} from "../model/basketModel";
 
 @Injectable({
     providedIn: 'root'
@@ -12,24 +13,23 @@ export class BasketService {
 
     private apiServerUrl = environment.apiBaseUrl;
 
-    constructor(private http: HttpClient) {
+    constructor(private httpClient: HttpClient) {
     }
 
     public getBaskets(): Observable<Basket[]> {
-        return this.http.get<Basket[]>(`${this.apiServerUrl}/basket/all`);
+        return this.httpClient.get<Basket[]>(`${this.apiServerUrl}/basket/all`);
     }
 
-    public addBasket(basket: Product) {
-        this.http.post<Basket>(`${this.apiServerUrl}/basket/add`, basket).subscribe((data) => {
-            console.log("Data", data);
-        })
+    public addBasket(basket: BasketModel): Observable<BasketModel> {
+        console.log(basket);
+        return this.httpClient.post<BasketModel>(`${this.apiServerUrl}/basket/add`, basket);
     }
 
     public updateBasket(basket: Basket): Observable<Basket> {
-        return this.http.put<Basket>(`${this.apiServerUrl}/basket/update`, basket);
+        return this.httpClient.put<Basket>(`${this.apiServerUrl}/basket/update`, basket);
     }
 
     public deleteBasket(basketId: number): Observable<Basket> {
-        return this.http.delete<Basket>(`${this.apiServerUrl}/basket/delete/${basketId}`);
+        return this.httpClient.delete<Basket>(`${this.apiServerUrl}/basket/delete/${basketId}`);
     }
 }

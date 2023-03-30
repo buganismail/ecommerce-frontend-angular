@@ -26,6 +26,7 @@ import {FileUploadModule} from "primeng/fileupload";
 import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ProductService} from "./custom/service/product.service";
+import {InputTextModule} from "primeng/inputtext";
 
 @NgModule({
     declarations: [
@@ -48,13 +49,15 @@ import {ProductService} from "./custom/service/product.service";
         FileUploadModule,
         ToastModule,
         ConfirmDialogModule,
-        FormsModule
+        FormsModule,
+        InputTextModule
     ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, UserProductsService, ProductService
     ],
+
     bootstrap: [AppComponent]
 })
 export class AppModule {
