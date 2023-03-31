@@ -23,7 +23,6 @@ import {PasswordModule} from "primeng/password";
         FormsModule,
         ReactiveFormsModule,
         PasswordModule
-
     ]
 })
 export class LoginpageModule {

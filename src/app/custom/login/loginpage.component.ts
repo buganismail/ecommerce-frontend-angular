@@ -9,19 +9,15 @@ import {Router} from "@angular/router";
     templateUrl: './loginpage.component.html',
     styleUrls: ['./loginpage.component.css']
 })
-export class LoginpageComponent implements OnInit {
+export class LoginpageComponent {
     email?: string;
     password?: string;
     private apiServerUrl = environment.apiBaseUrl;
 
-    ngOnInit() {
-
-    }
 
     constructor(
         private http: HttpClient,
         private router: Router,
-        private authService: AuthServiceService,
     ) {
     }
 
