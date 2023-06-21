@@ -9,6 +9,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {BasketService} from "../../service/basket.service";
 import {Basket} from "../../../demo/api/basket";
 import {AuthServiceService} from "../../login/auth/auth-service.service";
+import {BasketModel} from "../../model/basketModel";
 
 @Component({
     selector: 'app-cart',
@@ -49,11 +50,19 @@ export class CartComponent implements OnInit {
 
     ngOnInit() {
         this.getBaskets();
-        // this.products = JSON.parse(localStorage.getItem('PRODUCS'));
     }
 
     public getBaskets(): void {
-        this.basketService.getBaskets().subscribe(
+        // @ts-ignore
+        let user_id = Number(JSON.parse(localStorage.getItem('User_id')));
+        let basket: BasketModel;
+        basket = {
+            product: this.product,
+            user: {
+                id: user_id
+            }
+        }
+        this.basketService.getBaskets(user_id).subscribe(
             (response: Basket[]) => {
                 this.products = response;
             });

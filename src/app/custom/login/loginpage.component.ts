@@ -27,6 +27,7 @@ export class LoginpageComponent {
 
         }).subscribe(data => {
             // Login başarılı oldu. JWT token'ı burada data.token şeklinde alınabilir.
+            console.log("data",data)
             localStorage.setItem('access_token', data.token);
             localStorage.setItem('role', data.role);
             localStorage.setItem('User_id', data.user_id);

@@ -16,7 +16,7 @@ export class BasketService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public getBaskets(): Observable<Basket[]> {
+    public getBaskets(user_id: number): Observable<Basket[]> {
         return this.httpClient.get<Basket[]>(`${this.apiServerUrl}/basket/all`);
     }
 
